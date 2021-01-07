@@ -35,6 +35,7 @@ jobs:
         with:
           postgresql version: '11'  # See https://hub.docker.com/_/postgres for available versions
           postgresql db: 'employees' # Optional, default value is "test". The specified database which will be create
+          postgresql user: ${{ secrets.POSTGRES_USER }}
           postgresql password: ${{ secrets.POSTGRES_PASSWORD }} # Required if "mysql user" is empty, default is empty. The root superuser password
 
       - name: Test and build project
