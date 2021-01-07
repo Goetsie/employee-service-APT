@@ -33,7 +33,8 @@ jobs:
       - name: Start postgresql for integration test
         uses: harmon758/postgresql-action@v1
         with:
-          postgresql database: 'employees' # Optional, default value is "test". The specified database which will be create
+          postgresql version: '11'  # See https://hub.docker.com/_/postgres for available versions
+          postgresql db: 'employees' # Optional, default value is "test". The specified database which will be create
           postgresql password: ${{ secrets.POSTGRES_PASSWORD }} # Required if "mysql user" is empty, default is empty. The root superuser password
 
       - name: Test and build project
