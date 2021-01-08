@@ -3,9 +3,8 @@ package fact.it.employeeservice.controller;
 import fact.it.employeeservice.model.Employee;
 import fact.it.employeeservice.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -46,5 +45,37 @@ public class EmployeeController {
     @GetMapping("/employees/{employeeNumber}")
     public Employee getEmployeeByEmployeeNumber(@PathVariable String employeeNumber){
         return employeeRepository.findEmployeeByEmployeeNumber(employeeNumber);
+    }
+
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee employee){
+
+        employeeRepository.save(employee);
+
+        return employee;
+    }
+
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee updatedEmployee){
+        Employee retrievedEmployee = employeeRepository.findEmployeeByEmployeeNumber(updatedEmployee.getEmployeeNumber());
+
+        retrievedEmployee.setName(updatedEmployee.getName());
+        retrievedEmployee.setSurName(updatedEmployee.getSurName());
+        retrievedEmployee.setGardenCenterId(updatedEmployee.getGardenCenterId());
+
+        employeeRepository.save(retrievedEmployee);
+
+        return retrievedEmployee;
+    }
+
+    @DeleteMapping("/employees/{employeeNumber}")
+    public ResponseEntity deleteEmployee(@PathVariable String employeeNumber){
+        Employee employee = employeeRepository.findEmployeeByEmployeeNumber(employeeNumber);
+        if(employee!=null){
+            employeeRepository.delete(employee);
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }
