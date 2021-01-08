@@ -20,9 +20,9 @@ public class EmployeeController {
     public void fillDB(){
         if(employeeRepository.count()==0){
             employeeRepository.save(new Employee(1, "Arno","Vangoetsenhoven","E051448"));
-            employeeRepository.save(new Employee(1, "Niel","Everaerts","E684572"));
+            employeeRepository.save(new Employee(2, "Niel","Everaerts","E684572"));
             employeeRepository.save(new Employee(1, "Lloyd","Moons","E000215"));
-            employeeRepository.save(new Employee(1, "Bram","Brabants","E551864"));
+            employeeRepository.save(new Employee(3, "Bram","Brabants","E551864"));
         }
 
         System.out.println(employeeRepository.findEmployeeByEmployeeNumber("E000215").getSurName());
