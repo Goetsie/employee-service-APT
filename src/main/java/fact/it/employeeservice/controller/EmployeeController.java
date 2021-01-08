@@ -15,16 +15,14 @@ public class EmployeeController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
     @PostConstruct
     public void fillDB(){
         if(employeeRepository.count()==0){
             employeeRepository.save(new Employee(1, "Arno","Vangoetsenhoven","E051448"));
             employeeRepository.save(new Employee(2, "Niel","Everaerts","E684572"));
             employeeRepository.save(new Employee(1, "Lloyd","Moons","E000215"));
-            employeeRepository.save(new Employee(3, "Bram","Brabants","E551864"));
         }
-
-        System.out.println(employeeRepository.findEmployeeByEmployeeNumber("E000215").getSurName());
     }
 
     @GetMapping("/employees/gardenCenterId/{gardenCenterId}")
@@ -33,12 +31,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/surName/{surName}")
-    public Employee getEmployeeBySurName(@PathVariable String surName){
+    public List<Employee> getEmployeeBySurName(@PathVariable String surName){
         return employeeRepository.findEmployeeBySurName(surName);
     }
 
     @GetMapping("/employees/name/{name}")
-    public Employee getEmployeeByName(@PathVariable String name){
+    public List<Employee> getEmployeeByName(@PathVariable String name){
         return employeeRepository.findEmployeeByName(name);
     }
 
